@@ -1,0 +1,24 @@
+{% extends 'blog/base.html' %}
+{% block title %}
+  Create account · Postboard
+{% endblock %}
+{% block data %}
+  <section class="login-layout">
+    <div class="login-copy">
+      <p class="header">Customer account</p><h1>Join the conversation.</h1><p>Create a customer account to access the latest posts and updates.</p>
+    </div>
+    <form method="post" class="auth-card">
+      {% csrf_token %}
+      <p class="header">Create account</p><h2>Get started</h2>{% for field in form %}
+        <label for="{{ field.id_for_label }}">{{ field.label }}</label>{{ field }}{% if field.help_text %}
+          <small>{{ field.help_text }}</small>
+        {% endif %}
+        {% for error in field.errors %}
+          <small class="field-error">{{ error }}</small>
+        {% endfor %}
+      {% endfor %}<button class="button" type="submit">Create account</button><p class="switch-link">
+        Already have an account? <a href="{% url 'blog:customer_login' %}">Sign in</a>
+      </p>
+    </form>
+  </section>
+{% endblock %}

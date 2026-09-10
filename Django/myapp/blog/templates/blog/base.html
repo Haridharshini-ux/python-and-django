@@ -1,0 +1,38 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" /><title>
+      {% block title %}
+        Postboard
+      {% endblock %}
+    </title><link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="{% static 'style.css' %}" />
+  </head>
+  <body>
+    <header class="site-header">
+      <a class="brand" href="{% url 'blog:index' %}">ARTICLES POST BOARD</a><nav>
+        {% if user.is_authenticated %}
+          {% if user.is_staff %}
+            <a href="{% url 'blog:admin_dashboard' %}">Manage posts</a>
+          {% else %}
+            <a href="{% url 'blog:index' %}">Latest posts</a>
+          {% endif %}<span class="user-name">{{ user.username }}</span><a class="button button-small" href="{% url 'blog:logout' %}">Sign out</a>
+        {% else %}
+          <a href="{% url 'blog:customer_login' %}">Customer sign in</a><a class="button-small" href="{% url 'blog:admin_login' %}">Admin sign in</a>
+        {% endif %}
+      </nav>
+    </header>
+    <main>
+      {% if messages %}{% for message in messages %}
+        <div class="message {{ message.tags }}">{{ message }}</div>
+      {% endfor %}{% endif %}
+      {% block data %}
+      {% endblock %}
+    </main>
+    <footer>Postboard · A simple place for useful updates.</footer>
+  </body>
+</html>
