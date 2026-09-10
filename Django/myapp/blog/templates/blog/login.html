@@ -1,0 +1,38 @@
+{% extends 'blog/base.html' %}
+{% block title %}
+  {{ login_type }} sign in · Postboard
+{% endblock %}
+{% block data %}
+  <section class="login-layout">
+    <div class="login-copy">
+      <p class="header">Postboard</p><h1>
+        {% if admin_login %}
+          Manage the stories that matter.
+        {% else %}
+          Keep up with what’s new.
+        {% endif %}
+      </h1><p>
+        {% if admin_login %}
+          This private area is for site administrators to publish and manage posts.
+        {% else %}
+          Sign in to view the latest posts and updates from our team.
+        {% endif %}
+      </p>
+    </div>
+    <form method="post" class="auth-card">
+      {% csrf_token %}
+      <p class="header">{{ login_type }} access</p><h2>Welcome back</h2><label for="username">Username</label><input id="username" name="username" required autocomplete="username" /><label for="password">Password</label><input id="password" type="password" name="password" required autocomplete="current-password" /><button class="button" type="submit">Sign in</button>{% if admin_login %}
+        <p class="switch-link">
+          Are you a customer? <a href="{% url 'blog:customer_login' %}">Customer sign in</a>
+        </p>
+      {% else %}
+        <p class="switch-link">
+          New here? <a href="{% url 'blog:customer_signup' %}">Create a customer account</a>
+        </p>
+        <p class="switch-link">
+          Administrator? <a href="{% url 'blog:admin_login' %}">Admin sign in</a>
+        </p>
+      {% endif %}
+    </form>
+  </section>
+{% endblock %}

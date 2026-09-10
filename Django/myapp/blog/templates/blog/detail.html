@@ -1,0 +1,12 @@
+{% extends 'blog/base.html' %}
+{% block title %}
+  {{ post.title }} · Postboard
+{% endblock %}
+{% block data %}
+  <article class="article-wrap">
+    <a class="back-link" href="{% url 'blog:index' %}">← All posts</a><p class="eyebrow">{{ post.created_at|date:'F j, Y' }}</p><h1>{{ post.title }}</h1>{% if post.image_url %}
+      <img src="{{ post.image_url }}" alt="" class="article-image" />
+    {% endif %}
+    <div class="article-content">{{ post.content|linebreaks }}</div>
+  </article>
+{% endblock %}

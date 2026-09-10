@@ -1,0 +1,26 @@
+{% extends 'blog/base.html' %}
+{% block title %}
+  Manage posts · Postboard
+{% endblock %}
+{% block data %}
+  <section class="admin-wrap">
+    <div>
+      <p class="eyebrow">Administrator workspace</p><h1>Publish a new post</h1><p class="intro">Your published posts appear immediately in the customer dashboard.</p>
+    </div>
+    <form method="post" class="post-form">
+      {% csrf_token %}<label for="title">Title</label><input id="title" name="title" maxlength="100" required placeholder="Give your post a clear title" /><label for="image_url">Image URL <span>(optional)</span></label><input id="image_url" name="image_url" type="url" placeholder="https://example.com/image.jpg" /><label for="content">Post content</label><textarea id="content" name="content" required rows="9" placeholder="Write your update here..."></textarea><button class="button" type="submit">Publish post</button>
+    </form>
+    <div class="section-heading manage-heading">
+      <h2>Published posts</h2><span>{{ posts|length }} total</span>
+    </div>
+    <div class="manage-list">
+      {% for post in posts %}
+        <div>
+          <strong>{{ post.title }}</strong><span>{{ post.created_at|date:'M j, Y' }}</span>
+        </div>
+      {% empty %}
+        <p>No posts have been published yet.</p>
+      {% endfor %}
+    </div>
+  </section>
+{% endblock %}
